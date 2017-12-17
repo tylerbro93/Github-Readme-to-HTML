@@ -16,8 +16,8 @@ class GithubReadmeHTML():
         self.url = url
         client = urlopen(self.url, timeout=2000)
         page = client.read()
-        soup_page = BeautifulSoup(page, "html.parser")
-        self.githubData = soup_page.find_all("article", {"class": "markdown-body entry-content"})
+        soup_page = BeautifulSoup(page, "html5lib")
+        self.githubData = soup_page.find("article", {"class": "markdown-body entry-content"})
         self.findProjectName()
         self.getImages()
 
@@ -26,11 +26,11 @@ class GithubReadmeHTML():
         self.projectName = self.projectName.replace("-", " ")
 
     def getImages(self):
-        text = self.githubData[0]
-        collection = ""
-        for i in text:
-            line = str(i)
-            if(line is not None):
+        text = self.githubData.prettify(formatter="minimal")
+        lines = []
+        lines = text.splitlines()
+        for line in lines:
+            if(True):
                 if("<img" in line):
                     data, linkdata = line.split("<img")
                     linkwork1 = linkdata.split('src=', 1)[-1]
@@ -43,9 +43,9 @@ class GithubReadmeHTML():
                     if(downloadError != 1):
                         link = link.replace(" ", "")
                         linkdata = linkdata.replace(link, self.projectName + "/" + self.imageName)
-                        #print(linkdata)
                         line = data + "<img" + linkdata
-            
+            self.article = self.article + line + "\n"
+        print(self.article)
 
     def downloadImage(self, new_link):
         errorState = 0
