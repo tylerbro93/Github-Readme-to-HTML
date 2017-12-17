@@ -10,6 +10,7 @@ class GithubReadmeHTML():
     links = []
     projectName = ""
     imageName = ""
+    article = ""
 
     def __init__(self, url):
         self.url = url
@@ -26,6 +27,7 @@ class GithubReadmeHTML():
 
     def getImages(self):
         text = self.githubData[0]
+        collection = ""
         for i in text:
             line = str(i)
             if(line is not None):
@@ -37,19 +39,18 @@ class GithubReadmeHTML():
                     link = link.replace('"', '')
                     new_link = "https://raw.githubusercontent.com" + link
                     new_link = new_link.replace("/raw/", "/")
-                    #print(new_link)
                     downloadError = self.downloadImage(new_link)
                     if(downloadError != 1):
                         link = link.replace(" ", "")
-                        linkdata = linkdata.replace(link, self.projectName + "/" + self.imageName )
-                        print(link)
-                        print(linkdata)
+                        linkdata = linkdata.replace(link, self.projectName + "/" + self.imageName)
+                        #print(linkdata)
+                        line = data + "<img" + linkdata
+            
 
     def downloadImage(self, new_link):
         errorState = 0
         try:
             self.imageName = str(new_link).rsplit("/", 1)[1]
-            print(self.imageName)
             backspace = "\\"
             try:
                 pass
