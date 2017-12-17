@@ -9,7 +9,7 @@ class GithubReadmeHTML():
     url = ""
     links = []
     projectName = ""
-    link = ""
+    imageName = ""
 
     def __init__(self, url):
         self.url = url
@@ -40,25 +40,23 @@ class GithubReadmeHTML():
                     #print(new_link)
                     downloadError = self.downloadImage(new_link)
                     if(downloadError != 1):
-                        if(link in line):
-                            print("true")
                         link = link.replace(" ", "")
-                        linkdata = linkdata.replace(link, new_link)
+                        linkdata = linkdata.replace(link, self.projectName + "/" + self.imageName )
                         print(link)
                         print(linkdata)
 
     def downloadImage(self, new_link):
         errorState = 0
         try:
-            imageName = str(new_link).rsplit("/", 1)[1]
-            print(imageName)
+            self.imageName = str(new_link).rsplit("/", 1)[1]
+            print(self.imageName)
             backspace = "\\"
             try:
                 pass
-                # urlretrieve(new_link, self.projectName + backspace + imageName)
+                # urlretrieve(new_link, self.projectName + backspace + self.imageName)
             except FileNotFoundError:
                 mkdir(self.projectName)
-                urlretrieve(new_link, backspace + self.projectName + backspace + imageName)
+                urlretrieve(new_link, backspace + self.projectName + backspace + self.imageName)
 
         except URLError:
             errorState = 1
