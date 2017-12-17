@@ -9,6 +9,7 @@ class GithubReadmeHTML():
     url = ""
     links = []
     projectName = ""
+    link = ""
 
     def __init__(self, url):
         self.url = url
@@ -41,6 +42,7 @@ class GithubReadmeHTML():
                     if(downloadError != 1):
                         if(link in line):
                             print("true")
+                        link = link.replace(" ", "")
                         linkdata = linkdata.replace(link, new_link)
                         print(link)
                         print(linkdata)
