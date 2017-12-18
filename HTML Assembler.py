@@ -22,7 +22,7 @@ class HTMLDocument():
         self.projectName = self.readmeData.projectName
         self.createFileName()
         self.parseCommands(commands)
-        self.aassembleHTML()
+        self.assembleHTML()
 
     def createFileName(self):
         self.htmlName = (self.projectName.replace(" ", "_").lower()) + ".html"
@@ -39,6 +39,8 @@ class HTMLDocument():
             self.loadFooter()
 
     def loadSidebar(self):
+        self.names.clear()
+        self.locations.clear()
         infile = open("Storage\ProjectLinks.csv")
         line = infile.readline().strip()
         while(len(line) > 0):
@@ -97,7 +99,7 @@ class HTMLDocument():
             self.footer = self.footer + line
             line = infile.readline()
 
-    def aassembleHTML(self):
+    def assembleHTML(self):
         self.htmlDoc = self.header + self.sideBar + self.article + self.sideTable + self.footer
 
 
