@@ -14,6 +14,7 @@ class HTMLDocuments():
         self.buildHTMLDocs(url, commands)
         if(self.commandSequence["sidebar"] == 1 and self.commandSequence["update"] == 1):
             self.updateAllSidebars()
+        self.saveHTMLDoc()
 
     def commandParser(self, commands):
         if(commands == "" or "-lastcall" in commands):
@@ -69,6 +70,9 @@ class HTMLDocuments():
             print(document.htmlDoc)
 
     def saveHTMLDoc(self):
-        pass
+        for document in self.htmlDocuments:
+            infile = open(document.htmlName, 'w')
+            infile.write(document.htmlDoc)
+            infile.close()
 
 htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
