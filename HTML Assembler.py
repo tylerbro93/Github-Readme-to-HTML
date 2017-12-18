@@ -30,6 +30,7 @@ class HTMLDocument():
         if("-nosidebar" not in commands):
             self.loadSidebar()
             self.checkIfSidebarHasCurrentProject()
+            self.buildSidebar()
         if("-noheader" not in commands):
             self.loadHeader()
         if("-nofooter" not in commands):
@@ -64,6 +65,17 @@ class HTMLDocument():
         infile.write(text)
         infile.close()
 
+    def buildSidebar(self):
+        sidebarHTML = '<div class="sidebarProject">\n<ul>\n'
+        for name in self.names:
+            for location in self.locations:
+                values = {"name": name, "location": location}
+                text = '<li>\n<a href="{location}">{name}</a>\n</li>\n'.format(**values)
+                sidebarHTML = sidebarHTML + text
+        sidebarHTML = sidebarHTML + "</ul>\n</div>\n"
+        print(sidebarHTML)
+        self.sideBar = sidebarHTML
+
     def loadHeader(self):
         infile = open("HTML Parts\header.part")
         line = infile.readline()
@@ -78,6 +90,8 @@ class HTMLDocument():
             self.footer = self.footer + line
             line = infile.readline()
 
+    def aassembleHTML(self):
+        pass
 
 
 htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
