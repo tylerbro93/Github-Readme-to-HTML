@@ -13,6 +13,7 @@ class HTMLDocument():
     htmlName = ""
     names = []
     locations = []
+    htmlDoc = ""
 
     def __init__(self, url, commands=""):
         self.url = url
@@ -21,6 +22,7 @@ class HTMLDocument():
         self.projectName = self.readmeData.projectName
         self.createFileName()
         self.parseCommands(commands)
+        self.aassembleHTML()
 
     def createFileName(self):
         self.htmlName = (self.projectName.replace(" ", "_").lower()) + ".html"
@@ -73,8 +75,13 @@ class HTMLDocument():
                 text = '<li>\n<a href="{location}">{name}</a>\n</li>\n'.format(**values)
                 sidebarHTML = sidebarHTML + text
         sidebarHTML = sidebarHTML + "</ul>\n</div>\n"
-        print(sidebarHTML)
         self.sideBar = sidebarHTML
+        self.saveSidebarHTML()
+
+    def saveSidebarHTML(self):
+        infile = open("HTML Parts\sidebar.part", 'w')
+        infile.write(self.sideBar)
+        infile.close()
 
     def loadHeader(self):
         infile = open("HTML Parts\header.part")
@@ -91,7 +98,8 @@ class HTMLDocument():
             line = infile.readline()
 
     def aassembleHTML(self):
-        pass
+        self.htmlDoc = self.header + self.sideBar + self.article + self.sideTable + self.footer
+        print(self.htmlDoc)
 
 
 htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
