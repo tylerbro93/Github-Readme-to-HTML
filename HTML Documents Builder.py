@@ -10,7 +10,10 @@ class HTMLDocuments():
     def __init__(self, commands="", url=""):
         self.commands = commands
         self.commandParser(self.commands)
+        self.loadMonitoredRepos()
         self.buildHTMLDocs(url, commands)
+        if(self.commandSequence["sidebar"] == 1 and self.commandSequence["update"] == 1):
+            self.updateAllSidebars()
 
     def commandParser(self, commands):
         if(commands == "" or "-lastcall" in commands):
@@ -25,17 +28,18 @@ class HTMLDocuments():
     def buildHTMLDocs(self, url, commands):
         if(url != ""):
             HTMLDoc = HTML_Assembler.HTMLDocument(url, commands)
+            print(HTMLDoc.htmlDoc)
             self.htmlDocuments.append(HTMLDoc)
             if(self.commandSequence["update"] == 1):
                 self.rebuildAllHTMLDocs(commands)
-
-            self.urls.append(url)
-            self.addToMonitoredRepos(url)
+            if(url not in self.urls):
+                self.urls.append(url)
+                self.addToMonitoredRepos(url)
         elif(url == "" and self.commandSequence["update"] == 1):
             self.rebuildAllHTMLDocs(commands)
+        print(self.urls)
 
     def rebuildAllHTMLDocs(self, commands):
-        self.loadMonitoredRepos()
         for url in self.urls:
             self.fetchHTMLDocument(url, commands)
 
@@ -44,6 +48,7 @@ class HTMLDocuments():
         url = infile.readline().strip()
         while(len(url) > 0):
             self.urls.append(url)
+            url = infile.readline().strip()
         infile.close()
 
     def fetchHTMLDocument(self, url, commands):
@@ -56,5 +61,14 @@ class HTMLDocuments():
             infile.write(url)
             infile.close()
 
+    def updateAllSidebars(self):
+        for document in self.htmlDocuments:
+            document.loadSidebar()
+            document.buildSidebar()
+            document.assembleHTML()
+            print(document.htmlDoc)
+
+    def saveHTMLDoc(self):
+        pass
 
 htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
