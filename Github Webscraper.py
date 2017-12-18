@@ -45,7 +45,6 @@ class GithubReadmeHTML():
                         linkdata = linkdata.replace(link, self.projectName + "/" + self.imageName)
                         line = data + "<img" + linkdata
             self.article = self.article + line + "\n"
-        print(self.article)
 
     def downloadImage(self, new_link):
         errorState = 0
@@ -58,10 +57,8 @@ class GithubReadmeHTML():
             except FileNotFoundError:
                 mkdir(self.projectName)
                 urlretrieve(new_link, backspace + self.projectName + backspace + self.imageName)
-
         except URLError:
             errorState = 1
-
         return errorState
 
 
@@ -71,4 +68,4 @@ class GithubReadmeHTML():
 
 
 
-githubreadmedata = GithubReadmeHTML("https://github.com/tylerbro93/Multicast-Chat-System")
+#githubreadmedata = GithubReadmeHTML("https://github.com/tylerbro93/Multicast-Chat-System")
