@@ -10,7 +10,7 @@ class HTMLDocuments():
     def __init__(self, commands="", url=""):
         self.commands = commands
         self.commandParser(self.commands)
-
+        self.buildHTMLDocs(url, commands)
 
     def commandParser(self, commands):
         if(commands == "" or "-lastcall" in commands):
@@ -24,7 +24,20 @@ class HTMLDocuments():
 
     def buildHTMLDocs(self, url, commands):
         if(url != ""):
-            pass
+            HTMLDoc = HTML_Assembler.HTMLDocument(url, commands)
+            self.htmlDocuments.append(HTMLDoc)
+            if(self.commandSequence["update"] == 1):
+                self.rebuildAllHTMLDocs(commands)
+
+            self.urls.append(url)
+            self.addToMonitoredRepos(url)
+        elif(url == "" and self.commandSequence["update"] == 1):
+            self.rebuildAllHTMLDocs(commands)
+
+    def rebuildAllHTMLDocs(self, commands):
+        self.loadMonitoredRepos()
+        for url in self.urls:
+            self.fetchHTMLDocument(url, commands)
 
     def loadMonitoredRepos(self):
         infile = open("Storage\Monitored Repos.txt")
@@ -33,11 +46,15 @@ class HTMLDocuments():
             self.urls.append(url)
         infile.close()
 
-    def fetchHTMLDocument(self, url, commands=""):
-        htmlDoc = HTML_Assembler.HTMLDocument(url)
+    def fetchHTMLDocument(self, url, commands):
+        htmlDoc = HTML_Assembler.HTMLDocument(url, commands)
         self.htmlDocuments.append(htmlDoc)
 
-    def addToMonitoredRepos(self):
-        infile = open("Storage\Monitored Repos.txt")
+    def addToMonitoredRepos(self, url):
+        if(url not in self.urls):
+            infile = open("Storage\Monitored Repos.txt", 'a')
+            infile.write(url)
+            infile.close()
 
-htmlDocuments = HTMLDocuments()
+
+htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")

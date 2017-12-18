@@ -99,7 +99,6 @@ class HTMLDocument():
 
     def aassembleHTML(self):
         self.htmlDoc = self.header + self.sideBar + self.article + self.sideTable + self.footer
-        print(self.htmlDoc)
 
 
 #htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
