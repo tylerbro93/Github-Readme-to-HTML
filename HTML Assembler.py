@@ -102,5 +102,5 @@ class HTMLDocument():
         print(self.htmlDoc)
 
 
-htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
+#htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
 
