@@ -75,4 +75,4 @@ class HTMLDocuments():
             infile.write(document.htmlDoc)
             infile.close()
 
-htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
+#htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
