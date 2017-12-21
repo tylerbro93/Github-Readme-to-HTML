@@ -4,6 +4,7 @@ urls = []
 command = ""
 repos = []
 
+
 def getUserRequest():
     print("what would you like to do:\n1. Turn single readme to HTML Document\n2. Turn multiple readmes to HTML "
           "Documents\n3. Advance Mode\n4. Help")
@@ -31,6 +32,7 @@ def getUrl():
     urls.append(url)
     return url
 
+
 def getCommand():
     global command
     print("If you do not want to enter commands to call then hit Enter to skip!")
@@ -40,13 +42,23 @@ def getCommand():
 def performHTMLConstrution():
     pass
 
+
 def loadMonitoredRepos():
     infile = open("Storage\Monitored Repos.txt")
     line = infile.readline().strip()
-    while(line > 0):
+    while(len(line) > 0):
         repos.append(line)
         line = infile.readline().strip()
+    infile.close()
 
+
+def addToMonitoredRepo():
+    infile = open("Storage\Monitored Repos.txt", 'a')
+    text = ""
+    for url in urls:
+        text = text + url + "\n"
+    infile.write(text)
+    infile.close()
 
 if __name__ == "__main__":
     getUserRequest()
