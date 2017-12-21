@@ -1,5 +1,6 @@
 HTML_Document_Builder = __import__("HTML Document Builder")
 
+results_list = []
 
 def getUserRequest():
     print("what would you like to do:\n1. Turn single readme to HTML Document\n2. Turn multiple readmes to HTML "
@@ -10,10 +11,16 @@ def getUserRequest():
         results = getUrlandCommand()
         HTML_Document_Builder.HTMLDocuments(results[1], results[0])
     if(choice == "2"):
-        url = "first run"
-        while(url != ""):
-            print("If you do not want to enter a url then hit Enter to skip!")
-            url = input("What is the url: ")
+        keepGoing = True
+        while(keepGoing == False):
+            results = getUrlandCommand()
+            if(results[0] != ""):
+                results_list.append(results)
+            else:
+                keepGoing = False
+        
+
+
 
 
 def getUrlandCommand():
