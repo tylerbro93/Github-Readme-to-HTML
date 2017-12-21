@@ -62,9 +62,10 @@ class HTMLDocument():
 
     def saveProjectLinks(self):
         text = ""
-        for name in self.names:
-            for location in self.locations:
-                text = text + name + "/" + location + "\n"
+        print(self.names)
+        print(self.locations)
+        for index_num in range(0, len(self.names)):
+            text = text + self.names[index_num] + "/" + self.locations[index_num] + "\n"
         infile = open("Storage\ProjectLinks.csv", 'w')
         infile.write(text)
         infile.close()
@@ -104,4 +105,5 @@ class HTMLDocument():
 
 
 #htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
+htmlDoc = HTMLDocument("https://github.com/tylerbro93/COBOL-MERGE-AND-SORTED-WAREHOUSE-INVENTORY-SALES")
 
