@@ -38,8 +38,9 @@ class HTMLDocuments():
             if(self.commandSequence["update"] == 1):
                 self.rebuildAllHTMLDocs(commands)
             if(url not in self.urls):
-                self.urls.append(url)
                 self.addToMonitoredRepos(url)
+                self.urls.append(url)
+
         elif(url == "" and self.commandSequence["update"] == 1):
             self.rebuildAllHTMLDocs(commands)
         print(self.urls)
@@ -63,7 +64,7 @@ class HTMLDocuments():
     def addToMonitoredRepos(self, url):
         if(url not in self.urls):
             infile = open("Storage\Monitored Repos.txt", 'a')
-            infile.write(url)
+            infile.write(url + "\n")
             infile.close()
 
     def updateAllSidebars(self):
@@ -79,4 +80,5 @@ class HTMLDocuments():
             infile.write(document.htmlDoc)
             infile.close()
 
-#htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
+# htmlDocuments = HTMLDocuments("", "https://github.com/tylerbro93/Multicast-Chat-System")
+# htmlDocuments = HTMLDocuments("", "")

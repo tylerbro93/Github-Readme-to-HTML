@@ -14,9 +14,11 @@ class HTMLDocument():
     names = []
     locations = []
     htmlDoc = ""
+    name_references = {}
 
     def __init__(self, url, commands=""):
         self.url = url
+        self.loadNameReferences()
         self.readmeData = Github_Webscraper.GithubReadmeHTML(self.url)
         self.article = self.readmeData.article
         self.projectName = self.readmeData.projectName
@@ -63,7 +65,11 @@ class HTMLDocument():
     def saveProjectLinks(self):
         text = ""
         for index_num in range(0, len(self.names)):
-            text = text + self.names[index_num] + "/" + self.locations[index_num] + "\n"
+            try:
+                text = text + self.name_references[self.names[index_num]] + "/" + self.locations[index_num] + "\n"
+            except KeyError:
+                text = text + self.names[index_num] + "/" + self.locations[index_num] + "\n"
+                print(self.names)
         infile = open("Storage\ProjectLinks.csv", 'w')
         infile.write(text)
         infile.close()
@@ -71,9 +77,12 @@ class HTMLDocument():
     def buildSidebar(self):
         sidebarHTML = '<div class="sidebarProject">\n<ul>\n'
         for index_num in range(0, len(self.names)):
+            try:
+                values = {"name": self.name_references[self.names[index_num]], "location": self.locations[index_num]}
+            except KeyError:
                 values = {"name": self.names[index_num], "location": self.locations[index_num]}
-                text = '<li>\n<a href="{location}">{name}</a>\n</li>\n'.format(**values)
-                sidebarHTML = sidebarHTML + text
+            text = '<li>\n<a href="{location}">{name}</a>\n</li>\n'.format(**values)
+            sidebarHTML = sidebarHTML + text
         sidebarHTML = sidebarHTML + "</ul>\n</div>\n"
         self.sideBar = sidebarHTML
         self.saveSidebarHTML()
@@ -93,14 +102,22 @@ class HTMLDocument():
     def loadFooter(self):
         infile = open("HTML Parts\\footer.part")
         line = infile.readline()
-        while (len(line) > 0):
+        while(len(line) > 0):
             self.footer = self.footer + line
             line = infile.readline()
+
+    def loadNameReferences(self):
+        infile = open("Storage\Reference Dictionary.dat")
+        line = infile.readline().strip()
+        while(len(line)>0):
+            oldName, newName = line.split("/")
+            self.name_references[oldName] = newName
+            line = infile.readline().strip()
 
     def assembleHTML(self):
         self.htmlDoc = self.header + self.sideBar + self.article + self.sideTable + self.footer
 
 
-#htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
-#htmlDoc = HTMLDocument("https://github.com/tylerbro93/COBOL-MERGE-AND-SORTED-WAREHOUSE-INVENTORY-SALES")
+# htmlDoc = HTMLDocument("https://github.com/tylerbro93/Multicast-Chat-System")
+# htmlDoc = HTMLDocument("https://github.com/tylerbro93/COBOL-MERGE-AND-SORTED-WAREHOUSE-INVENTORY-SALES")
 

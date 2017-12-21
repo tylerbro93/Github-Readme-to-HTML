@@ -50,10 +50,10 @@ class GithubReadmeHTML():
         errorState = 0
         try:
             self.imageName = str(new_link).rsplit("/", 1)[1]
-            backspace = "\\"
+            backspace = "/"
             try:
                 pass
-                # urlretrieve(new_link, self.projectName + backspace + self.imageName)
+                #urlretrieve(new_link, self.projectName + backspace + self.imageName)
             except FileNotFoundError:
                 mkdir(self.projectName)
                 urlretrieve(new_link, backspace + self.projectName + backspace + self.imageName)
@@ -62,10 +62,4 @@ class GithubReadmeHTML():
         return errorState
 
 
-
-
-
-
-
-
-#githubreadmedata = GithubReadmeHTML("https://github.com/tylerbro93/Multicast-Chat-System")
+# githubreadmedata = GithubReadmeHTML("https://github.com/tylerbro93/Multicast-Chat-System")
