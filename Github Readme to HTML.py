@@ -1,6 +1,8 @@
 HTML_Document_Builder = __import__("HTML Document Builder")
 
-results_list = []
+urls = []
+command = ""
+repos = []
 
 def getUserRequest():
     print("what would you like to do:\n1. Turn single readme to HTML Document\n2. Turn multiple readmes to HTML "
@@ -8,30 +10,42 @@ def getUserRequest():
     choice = input("Perform Option Number: ")
 
     if(choice == "1"):
-        results = getUrlandCommand()
-        HTML_Document_Builder.HTMLDocuments(results[1], results[0])
-    if(choice == "2"):
+        url = getUrl()
+        getCommand()
+        HTML_Document_Builder.HTMLDocuments(command, url)
+    elif(choice == "2"):
         keepGoing = True
+        loadMonitoredRepos()
+        getCommand()
         while(keepGoing == False):
-            results = getUrlandCommand()
-            if(results[0] != ""):
-                results_list.append(results)
+            url = getUrl()
+            if(url != "" and url not in repos):
+                urls.append(url)
             else:
                 keepGoing = False
-        
 
 
-
-
-def getUrlandCommand():
-    results = []
+def getUrl():
     print("If you do not want to enter a url then hit Enter to skip!")
     url = input("What is the url: ")
-    results.append(url)
+    urls.append(url)
+    return url
+
+def getCommand():
+    global command
     print("If you do not want to enter commands to call then hit Enter to skip!")
-    commands = input("What is the commands you want to run: ")
-    results.append(commands)
-    return results
+    command = input("What is the commands you want to run: ")
+
+
+def performHTMLConstrution():
+    pass
+
+def loadMonitoredRepos():
+    infile = open("Storage\Monitored Repos.txt")
+    line = infile.readline().strip()
+    while(line > 0):
+        repos.append(line)
+        line = infile.readline().strip()
 
 
 if __name__ == "__main__":
