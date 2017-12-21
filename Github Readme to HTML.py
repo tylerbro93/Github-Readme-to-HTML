@@ -1,4 +1,4 @@
-HTML_Document_Builder = __import__("HTML Document Builder")
+HTML_Documents_Builder = __import__("HTML Documents Builder")
 
 urls = []
 command = ""
@@ -13,10 +13,10 @@ def getUserRequest():
     if(choice == "1"):
         url = getUrl()
         getCommand()
-        HTML_Document_Builder.HTMLDocuments(command, url)
+        HTML_Documents_Builder.HTMLDocuments(command, url)
     elif(choice == "2"):
         keepGoing = True
-        loadMonitoredRepos()
+        #loadMonitoredRepos()
         getCommand()
         while(keepGoing == False):
             url = getUrl()
@@ -24,6 +24,7 @@ def getUserRequest():
                 urls.append(url)
             else:
                 keepGoing = False
+        HTML_Documents_Builder.HTMLDocuments(command, urls)
 
 
 def getUrl():
@@ -38,7 +39,7 @@ def getCommand():
     print("If you do not want to enter commands to call then hit Enter to skip!")
     command = input("What is the commands you want to run: ")
 
-
+'''
 def performHTMLConstrution():
     pass
 
@@ -59,6 +60,6 @@ def addToMonitoredRepo():
         text = text + url + "\n"
     infile.write(text)
     infile.close()
-
+'''
 if __name__ == "__main__":
     getUserRequest()
