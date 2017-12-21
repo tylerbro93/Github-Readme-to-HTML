@@ -7,6 +7,7 @@ class Renamer():
     def __init__(self, oldName, newName):
         self.loadProjectLinks()
         self.replaceHTMLName()
+        self.saveProjectLinks()
 
     def loadProjectLinks(self):
         infile = open("Storage\ProjectLinks.csv")
@@ -23,3 +24,12 @@ class Renamer():
             self.names[self.names.index(oldName)] = newName
         except ValueError:
             print("Typo in Name!")
+
+    def saveProjectLinks(self):
+        text = ""
+        for index_num in range(0, len(self.names)):
+            text = text + self.names[index_num] + "/" + self.locations[index_num] + "\n"
+        infile = open("Storage\ProjectLinks.csv", 'w')
+        infile.write(text)
+        infile.close()
+
