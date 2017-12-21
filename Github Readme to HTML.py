@@ -1,4 +1,5 @@
 HTML_Documents_Builder = __import__("HTML Documents Builder")
+HTML_Renamer = __import__("HTML Renamer")
 
 urls = []
 command = ""
@@ -7,7 +8,7 @@ repos = []
 
 def getUserRequest():
     print("what would you like to do:\n1. Turn single readme to HTML Document\n2. Turn multiple readmes to HTML "
-          "Documents\n3. Advance Mode\n4. Help")
+          "Documents and update\n3. Edit Sidebar Names\n4. Help")
     choice = input("Perform Option Number: ")
 
     if(choice == "1"):
@@ -25,6 +26,11 @@ def getUserRequest():
             else:
                 keepGoing = False
         HTML_Documents_Builder.HTMLDocuments(command, urls)
+    elif(choice == "3"):
+        oldName = input("What is the name of the sidebar element you want to replace\n\tEXAMPLE: Personal "
+                        "Webapage\nName to Replace: ")
+        newName = input("What do you want to change the sidebar Element Name to\n\tEXAMPLE: Webpage\nNew Name: ")
+        HTML_Renamer.Renamer(oldName, newName)
 
 
 def getUrl():
