@@ -62,8 +62,6 @@ class HTMLDocument():
 
     def saveProjectLinks(self):
         text = ""
-        print(self.names)
-        print(self.locations)
         for index_num in range(0, len(self.names)):
             text = text + self.names[index_num] + "/" + self.locations[index_num] + "\n"
         infile = open("Storage\ProjectLinks.csv", 'w')
@@ -72,9 +70,8 @@ class HTMLDocument():
 
     def buildSidebar(self):
         sidebarHTML = '<div class="sidebarProject">\n<ul>\n'
-        for name in self.names:
-            for location in self.locations:
-                values = {"name": name, "location": location}
+        for index_num in range(0, len(self.names)):
+                values = {"name": self.names[index_num], "location": self.locations[index_num]}
                 text = '<li>\n<a href="{location}">{name}</a>\n</li>\n'.format(**values)
                 sidebarHTML = sidebarHTML + text
         sidebarHTML = sidebarHTML + "</ul>\n</div>\n"
