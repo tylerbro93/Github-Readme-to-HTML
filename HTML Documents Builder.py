@@ -11,7 +11,11 @@ class HTMLDocuments():
         self.commands = commands
         self.commandParser(self.commands)
         self.loadMonitoredRepos()
-        self.buildHTMLDocs(url, commands)
+        if(type(url) == str):
+            self.buildHTMLDocs(url, commands)
+        if(type(url) != str):
+            for link in url:
+                self.buildHTMLDocs(link, commands)
         if(self.commandSequence["sidebar"] == 1 and self.commandSequence["update"] == 1):
             self.updateAllSidebars()
         self.saveHTMLDoc()
