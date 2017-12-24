@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen, urlretrieve, URLError
 from os import mkdir
 from time import sleep
+from pathlib import Path
 
 
 class GithubReadmeHTML():
@@ -51,13 +52,15 @@ class GithubReadmeHTML():
         try:
             self.imageName = str(new_link).rsplit("/", 1)[1]
             backspace = "/"
+            self.imageName = self.imageName.replace("%20", " ")
+            filepath = self.projectName + backspace + self.imageName
             try:
-                pass
-                #urlretrieve(new_link, self.projectName + backspace + self.imageName.replace("%20", " "))
+                if((Path(filepath)).is_file() == False):
+                    urlretrieve(new_link, filepath)
             except FileNotFoundError:
                 mkdir(self.projectName)
-                sleep(5)  # prevents folder not being ready because of slow system
-                urlretrieve(new_link, backspace + self.projectName + backspace + self.imageName)
+                sleep(15)  # prevents folder not being ready because of slow system
+                urlretrieve(new_link, filepath)
         except URLError:
             errorState = 1
         return errorState
