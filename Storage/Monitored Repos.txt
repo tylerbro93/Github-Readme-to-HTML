@@ -1,2 +1,4 @@
 https://github.com/tylerbro93/Multicast-Chat-System
 https://github.com/tylerbro93/COBOL-MERGE-AND-SORTED-WAREHOUSE-INVENTORY-SALES
+https://github.com/tylerbro93/Village-Bus-Alert
+https://github.com/tylerbro93/COBOL-SALES-BY-WAREHOUSE

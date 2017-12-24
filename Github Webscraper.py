@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, urlretrieve, URLError
 from os import mkdir
-
+from time import sleep
 
 
 class GithubReadmeHTML():
@@ -53,9 +53,10 @@ class GithubReadmeHTML():
             backspace = "/"
             try:
                 pass
-                #urlretrieve(new_link, self.projectName + backspace + self.imageName)
+                #urlretrieve(new_link, self.projectName + backspace + self.imageName.replace("%20", " "))
             except FileNotFoundError:
                 mkdir(self.projectName)
+                sleep(5)  # prevents folder not being ready because of slow system
                 urlretrieve(new_link, backspace + self.projectName + backspace + self.imageName)
         except URLError:
             errorState = 1

@@ -54,8 +54,8 @@ class HTMLDocument():
 
     def checkIfSidebarHasCurrentProject(self):
         found = 0
-        for name in self.names:
-            if(self.projectName == name):
+        for location in self.locations:
+            if(self.htmlName == location):
                 found = 1
         if(found != 1):
             self.names.append(self.projectName)
